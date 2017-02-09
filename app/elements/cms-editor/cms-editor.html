@@ -1,0 +1,58 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/polymer-tinymce/polymer-tinymce.html">
+<link rel="import" href="../../bower_components/marked-element/marked-element.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+
+<dom-module id="cms-editor">
+    <template>
+        <style>
+
+        </style>
+        <!--<paper-tabs selected="0">
+            <paper-tab>Editor</paper-tab>
+            <paper-tab>Preview</paper-tab>
+        </paper-tabs>
+        <iron-pages selected="{{selected}}">
+            <div>-->
+                <paper-material elevation="3">
+                    <polymer-tinymce on-tiny-change="onChange" id="editor" tinytoolbar="insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                        tinyplugins='["advlist autolink lists link image charmap print preview anchor","searchreplace visualblocks code fullscreen","insertdatetime media table contextmenu paste"]'>
+                        </polymer-tinymce>
+                </paper-material>
+            <!--</div>
+            <div>-->
+                <paper-material elevation="1">
+                    <marked-element id="viewer" markdown="This will update as you edit the document">
+                        <div class="markdown-html"></div>
+                    </marked-element>
+                </paper-material>
+            <!--</div>
+        </iron-pages>-->
+    </template>
+    <script>
+        Polymer({
+
+            is: "cms-editor",
+
+            getContent: function () {
+                this.$.contentInput.value = this.$.editor.getContent();
+            },
+
+            setContent: function () {
+                this.$.editor.setContent(this.$.contentInput.value);
+            },
+
+            onChange: function (e) {
+                // Get content
+                var content = this.$.editor.getContent();
+                this.$.viewer.markdown = content;
+
+                // Do stuff ...
+
+            }
+
+        });
+    </script>
+</dom-module>
