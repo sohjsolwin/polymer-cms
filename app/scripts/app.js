@@ -17,11 +17,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
   // Sets app default base URL
   app.baseUrl = '/';
+  app.signedIn = false;
   if (window.location.port === '') {  // if production
     // Uncomment app.baseURL below and
     // set app.baseURL to '/your-pathname/' if running from folder in production
     // app.baseUrl = '/polymer-starter-kit/';
   }
+
+  app.logout = function() {
+    app.$.loginfire.signOut();
+  };
 
   app.displayInstalledToast = function() {
     // Check to make sure caching is actually enabled—it won't be in the dev environment.
