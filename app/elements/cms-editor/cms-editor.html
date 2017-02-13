@@ -8,33 +8,65 @@
 <dom-module id="cms-editor">
     <template>
         <style>
-
+            paper-button.indigo {
+                margin-bottom: 5px;
+                background-color: var(--paper-indigo-500);
+                color: white;
+                --paper-button-raised-keyboard-focus: {
+                  background-color: var(--paper-pink-a200) !important;
+                  color: white !important;
+                };
+              }
+              paper-button.indigo:hover {
+                background-color: var(--paper-indigo-400);
+            }
+            paper-tabs {
+                font-family: 'Roboto', 'Noto', sans-serif;
+                -webkit-font-smoothing: antialiased;
+                width: 100%;
+                text-transform: uppercase;
+                margin-bottom: 1px;
+                background-color:#3f51b5;
+                color: #fff;
+                box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
+                --paper-tabs-selection-bar{
+                    background-color:blue;
+                }
+            }
         </style>
-        <!--<paper-tabs selected="0">
-            <paper-tab>Editor</paper-tab>
+
+        <paper-button raised class="indigo">Save</paper-button>
+
+        <paper-tabs selected={{selected}} scrollable>
+            <paper-tab>Edit</paper-tab>
             <paper-tab>Preview</paper-tab>
         </paper-tabs>
-        <iron-pages selected="{{selected}}">
-            <div>-->
-                <paper-material elevation="3">
-                    <polymer-tinymce on-tiny-change="onChange" id="editor" tinytoolbar="insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-                        tinyplugins='["advlist autolink lists link image charmap print preview anchor","searchreplace visualblocks code fullscreen","insertdatetime media table contextmenu paste"]'>
-                        </polymer-tinymce>
-                </paper-material>
-            <!--</div>
-            <div>-->
-                <paper-material elevation="1">
-                    <marked-element id="viewer" markdown="This will update as you edit the document">
-                        <div class="markdown-html"></div>
-                    </marked-element>
-                </paper-material>
-            <!--</div>
-        </iron-pages>-->
+
+        <iron-pages selected={{selected}}>
+            <paper-material elevation="3">
+                <polymer-tinymce on-tiny-change="onChange" id="editor" tinytoolbar="insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                    tinyplugins='["advlist autolink lists link image charmap print preview anchor","searchreplace visualblocks code fullscreen","insertdatetime media table contextmenu paste"]'>
+                    </polymer-tinymce>
+            </paper-material>
+
+            <paper-material elevation="1">
+                <marked-element id="viewer" markdown="This will update as you edit the document">
+                    <div class="markdown-html"></div>
+                </marked-element>
+            </paper-material>
+        </iron-pages>
+        
     </template>
     <script>
         Polymer({
 
             is: "cms-editor",
+
+            properties: {
+              selected: {
+                value: 0
+              }
+            },
 
             getContent: function () {
                 this.$.contentInput.value = this.$.editor.getContent();
@@ -50,9 +82,8 @@
                 this.$.viewer.markdown = content;
 
                 // Do stuff ...
-
             }
-
         });
+
     </script>
 </dom-module>
